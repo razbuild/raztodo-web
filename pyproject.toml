@@ -30,7 +30,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-    "raztodo>=0.10,<0.11",
+    "raztodo>=0.11.0",
     "fastapi[standard]>=0.141.1",
 ]
 

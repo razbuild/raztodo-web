@@ -2,7 +2,7 @@
 
 <h1>RazTodo Web</h1>
 
-<img src="assets/preview.png" alt="RazTodo Web task management interface">
+<img src="https://raw.githubusercontent.com/razbuild/raztodo-web/main/assets/preview.png" alt="RazTodo Web task management interface">
 
 <p>
   RazTodo Web adds a browser-based UI and a REST API on top of
@@ -16,7 +16,7 @@
 
 ## What is RazTodo Web?
 
-RazTodo Web is a Vanilla JavaScript + FastAPI web interface for [RazTodo](https://github.com/razbuild/raztodo), built directly on top of its core.
+RazTodo Web is a Vanilla **JavaScript + FastAPI** web interface for [RazTodo](https://github.com/razbuild/raztodo), built directly on top of its core.
 
 ## Features
 
@@ -37,7 +37,7 @@ RazTodo Web is a Vanilla JavaScript + FastAPI web interface for [RazTodo](https:
 ## Requirements
 
 * Python 3.10+
-* RazTodo 0.10.x
+* RazTodo 0.11.x
 
 ## Architecture
 
