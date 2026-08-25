@@ -855,14 +855,14 @@ wheels = [
 
 [[package]]
 name = "raztodo"
-version = "0.10.0"
+version = "0.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "raztint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/23/ba/9bd4281485a5ce14c6c26879ea0e76e35b7291bea83e47ec7e5508dfa266/raztodo-0.10.0.tar.gz", hash = "sha256:78e592ace688ed20fc52da733bc38d015d06d5fcfcc693f7beda3ad78cfd9cf1", size = 82631, upload-time = "2026-08-21T22:11:49.744Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7b/a4/f55462408480d577ed5d8ba434f5a5ef0132e1c377ab43680ec380558ba2/raztodo-0.11.0.tar.gz", hash = "sha256:794573e31dab5e97b39ddaba900809b4fb58211dccd9018b2c214d11c29f9848", size = 31817, upload-time = "2026-08-25T22:46:56.479Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/47/3c/446427fd35f0cd05ea79081f8bad3419c496d2db3fe8cdc3feba612ed40d/raztodo-0.10.0-py3-none-any.whl", hash = "sha256:12b37f85513e36ee7e9a1594f027da8976e706d9f92e9b9284dedfafded90980", size = 117473, upload-time = "2026-08-21T22:11:48.607Z" },
+    { url = "https://files.pythonhosted.org/packages/df/b2/b4b62030396ef4f90f7f3840d664179496400955a137e1dde081b42de1f5/raztodo-0.11.0-py3-none-any.whl", hash = "sha256:8afec9065c81ce4eb5265a8603a4f31a9b96a3fa625376dcb3f803c47f303630", size = 55170, upload-time = "2026-08-25T22:46:55.188Z" },
 ]
 
 [[package]]
@@ -884,7 +884,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.141.1" },
-    { name = "raztodo", specifier = ">=0.10,<0.11" },
+    { name = "raztodo", specifier = ">=0.11.0" },
 ]
 
 [package.metadata.requires-dev]
