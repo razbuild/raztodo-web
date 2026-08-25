@@ -1,13 +1,1 @@
-<svg
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
->
-    <path
-        d="M10 13.333V3.333M10 13.333L6.667 10M10 13.333L13.333 10M3.333 16.667H16.667"
-        stroke="#3e95ff"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><path stroke="#3e95ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 13.333V3.333M10 13.333L6.667 10M10 13.333L13.333 10M3.333 16.667H16.667"/></svg>
