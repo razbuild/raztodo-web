@@ -1,0 +1,41 @@
+<section class="nav-section" aria-labelledby="tools-heading">
+    <h2 class="nav-section-title" id="tools-heading">Tools</h2>
+
+    <div class="tool-buttons">
+
+        <button type="button" class="btn-ghost">
+            <img
+                src="{{ url_for('static', path='img/export.svg') }}"
+                alt=""
+                aria-hidden="true"
+            >
+            Export JSON
+        </button>
+
+        <button type="button" class="btn-ghost">
+            <img
+                src="{{ url_for('static', path='img/import.svg') }}"
+                alt=""
+                aria-hidden="true"
+            >
+            Import JSON
+        </button>
+
+        <button type="button" class="btn-ghost btn-danger-ghost">
+            <img
+                src="{{ url_for('static', path='img/trash.svg') }}"
+                alt=""
+                aria-hidden="true"
+            >
+            Clear all
+        </button>
+
+    </div>
+
+    <input
+        id="import-file"
+        type="file"
+        accept=".json,application/json"
+        style="display: none"
+    />
+</section>

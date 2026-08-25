@@ -1,0 +1,70 @@
+<section class="nav-section" aria-labelledby="create-task-heading">
+    <h2 class="nav-section-title" id="create-task-heading">New task</h2>
+
+    <div class="form-stack">
+        <input
+            id="new-title"
+            type="text"
+            placeholder="Task title"
+            class="input-primary"
+        />
+        <input
+            id="new-desc"
+            type="text"
+            placeholder="Description (optional)"
+        />
+
+        <div class="form-row">
+            <div class="field">
+                <label id="new-priority-label">Priority</label>
+                <div
+                    class="priority-picker"
+                    role="group"
+                    aria-labelledby="new-priority-label"
+                >
+                    <button
+                        type="button"
+                        class="priority-arrow"
+                        data-picker="new-priority"
+                        data-dir="-1"
+                        aria-label="Lower priority"
+                    >&#8249;</button>
+                    <span class="priority-label" data-picker-label="new-priority">None</span>
+                    <button
+                        type="button"
+                        class="priority-arrow"
+                        data-picker="new-priority"
+                        data-dir="1"
+                        aria-label="Higher priority"
+                    >&#8250;</button>
+                    <input type="hidden" id="new-priority" value="" />
+                </div>
+            </div>
+            <div class="field">
+                <label for="new-due">Due date</label>
+                <input id="new-due" type="date" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="field">
+                <label for="new-tags">Tags</label>
+                <input
+                    id="new-tags"
+                    type="text"
+                    placeholder="work, urgent"
+                />
+            </div>
+            <div class="field">
+                <label for="new-project">Project</label>
+                <input
+                    id="new-project"
+                    type="text"
+                    placeholder="Project name"
+                />
+            </div>
+        </div>
+
+        <button type="button" class="btn-primary">Add task</button>
+    </div>
+</section>

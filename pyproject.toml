@@ -1,0 +1,61 @@
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13"]
+build-backend = "uv_build"
+
+[project]
+name = "raztodo-web"
+version = "0.1.0"
+description = "Web UI for RazTodo"
+readme = { file = "README.md", content-type = "text/markdown" }
+license = "MIT"
+requires-python = ">=3.10"
+maintainers = [
+    { name = "Raz", email = "real.raz.dev@gmail.com" },
+]
+keywords = [
+    "raztodo",
+    "web-ui",
+    "fastapi",
+    "task-manager",
+    "local-first",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "raztodo>=0.10,<0.11",
+    "fastapi[standard]>=0.141.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/razbuild/raztodo-web"
+Documentation = "https://github.com/razbuild/raztodo-web#readme"
+Repository = "https://github.com/razbuild/raztodo-web"
+Issues = "https://github.com/razbuild/raztodo-web/issues"
+Changelog = "https://github.com/razbuild/raztodo-web/releases"
+
+[project.scripts]
+rt-web = "raztodo_web.__main__:main"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "ty",
+    "pytest",
+]
+
+[tool.uv.build-backend]
+module-name = "raztodo_web"
+module-root = "src"
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+xfail_strict = true
+filterwarnings = ["error"]

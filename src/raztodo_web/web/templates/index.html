@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RazTodo</title>
+        <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}" />
+        <link rel="icon" href="{{ url_for('static', path='img/favicon.ico') }}" />
+    </head>
+    <body>
+        {% include "partials/_toast.html" %}
+
+        <main class="app-shell">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <span class="logo-icon">
+                        <img
+                            src="{{ url_for('static', path='img/favicon.ico') }}"
+                            alt="RazTodo logo"
+                            width="46"
+                        />
+                    </span>
+                    <span class="logo-text">RazTodo</span>
+                </div>
+
+                <nav class="sidebar-nav">
+                    {% include "partials/_sidebar_new_task.html" %}
+
+                    <div class="nav-divider"></div>
+
+                    {% include "partials/_sidebar_search.html" %}
+
+                    <div class="nav-divider"></div>
+
+                    {% include "partials/_sidebar_tools.html" %}
+                </nav>
+            </aside>
+
+            <section class="main-content" aria-labelledby="task-list-heading">
+                {% include "partials/_main_header.html" %}
+                <ul id="task-list" class="task-list" role="list"></ul>
+            </section>
+        </main>
+
+        {% include "partials/_explain_modal.html" %}
+
+        <script type="module" src="{{ url_for('static', path='js/app.js') }}"></script>
+    </body>
+</html>
