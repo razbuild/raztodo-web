@@ -2,7 +2,7 @@ import sys
 from unittest.mock import MagicMock
 
 import pytest
-import raztodo.presentation.web.__main__ as web_main
+import raztodo_web.__main__ as web_main
 
 
 @pytest.fixture
