@@ -2,6 +2,7 @@ import sys
 from unittest.mock import MagicMock
 
 import pytest
+
 import raztodo_web.__main__ as web_main
 
 
