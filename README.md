@@ -16,23 +16,36 @@
 
 ## What is RazTodo Web?
 
-RazTodo Web is a Vanilla **JavaScript + FastAPI** web interface for [RazTodo](https://github.com/razbuild/raztodo), built directly on top of its core.
+RazTodo Web is a **Vanilla JavaScript + FastAPI** web interface for [RazTodo](https://github.com/razbuild/raztodo), built directly on top of its core.
 
 ## Features
 
-| Type        | Item                   | Details                                    |
-| ----------- | ---------------------- | ------------------------------------------ |
+| Type        | Item                   | Details                                       |
+| ----------- | ---------------------- | --------------------------------------------- |
 | 🤖 Optional | **Ollama**             | Access RazTodo's AI-powered task explanations |
-| 📋 Feature  | **Task Management**    | Create, update, complete, and delete tasks |
-| 🔎 Feature  | **Search & Filtering** | Search and filter by status                |
-| 🏷️ Feature  | **Organization**       | Priorities, tags, projects, and due dates  |
-| 📥 Feature  | **Import / Export**    | Import and export tasks as JSON            |
-| 🧹 Feature  | **Clean All**          | Delete all tasks at once                   |
-| 🌐 Feature  | **Responsive Web UI**  | Browser-based interface                    |
-| 🔌 Feature  | **REST API**           | FastAPI-powered API                        |
-| 🌓 Feature  | **Light / Dark Theme** | Light and dark themes                      |
-| 💾 Feature  | **Local-first**        | Runs locally without an external backend   |
+| 📋 Feature  | **Task Management**    | Create, update, complete, and delete tasks    |
+| 🔎 Feature  | **Search & Filtering** | Search and filter by status                   |
+| 🏷️ Feature | **Organization**       | Priorities, tags, projects, and due dates     |
+| 📥 Feature  | **Import / Export**    | Import and export tasks as JSON               |
+| 🧹 Feature  | **Clean All**          | Delete all tasks at once                      |
+| 🌐 Feature  | **Responsive Web UI**  | Browser-based interface                       |
+| 🔌 Feature  | **REST API**           | FastAPI-powered API                           |
+| 🌓 Feature  | **Light / Dark Theme** | Light and dark themes                         |
+| 💾 Feature  | **Local-first**        | Runs locally without an external backend      |
 
+## Screenshots
+
+### Light Theme
+
+![RazTodo Web - Light Theme](assets/screenshots/light-theme.png)
+
+### Dark Theme
+
+![RazTodo Web - Dark Theme](assets/screenshots/dark-theme.png)
+
+### API Documentation
+
+![RazTodo Web - API Documentation](assets/screenshots/api-docs.png)
 
 ## Requirements
 
@@ -90,11 +103,12 @@ Set a custom host or port with environment variables:
 RAZTODO_WEB_HOST=0.0.0.0 RAZTODO_WEB_PORT=8080 rt-web
 ```
 
-
 ## License
 
 [![License](https://img.shields.io/github/license/razbuild/raztodo-web)](https://github.com/razbuild/raztodo-web/blob/main/LICENSE)
 
 <div align="center">
+
 <img src="https://raw.githubusercontent.com/razbuild/.github/main/assets/badge.svg" alt="Made by RazBuild" width="160">
+
 </div>
