@@ -76,17 +76,18 @@ class TestExplainTask:
         assert response.status_code == 422
         assert response.json()["detail"] == ("mode must be: short, deep, or plan")
 
-    async def test_raztodo_exception_yields_error_event(self, client):
+    async def test_raztodo_exception_yields_standardized_error_event(self, client):
         c, uc = client
-        uc.stream.side_effect = RazTodoException("boom")
+        uc.stream.side_effect = RazTodoException("OllamaError: secret internal detail")
 
         response = await c.get("/api/tasks/1/explain")
 
         assert response.status_code == 200
         assert self._sse_events(response.text) == [
-            "event: error\ndata: An internal error occurred.",
+            'event: error\ndata: {"code": "LLM_ERROR", "message": "Unable to generate explanation"}',
             "data: [DONE]",
         ]
+        assert "secret internal detail" not in response.text
 
     async def test_newline_in_token_is_escaped(self, client):
         c, uc = client

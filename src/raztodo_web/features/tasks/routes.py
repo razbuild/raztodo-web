@@ -7,7 +7,7 @@ from typing import Any
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi.responses import FileResponse
-from raztodo.domain.exceptions import RazTodoException
+from raztodo.domain.exceptions import RazTodoException, TaskNotFoundError
 
 from raztodo_web.app.dependencies import (
     get_clear_uc,
@@ -19,6 +19,7 @@ from raztodo_web.app.dependencies import (
     get_mark_done_uc,
     get_update_uc,
 )
+from raztodo_web.app.errors import domain_error
 from raztodo_web.features.tasks.helpers import task_to_response
 from raztodo_web.features.tasks.schemas import (
     ClearResponse,
@@ -31,8 +32,8 @@ from raztodo_web.features.tasks.schemas import (
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 
 
-def _domain_error(e: Exception) -> HTTPException:
-    return HTTPException(status_code=400, detail=str(e))
+def _domain_error(e: RazTodoException) -> HTTPException:
+    return domain_error(e)
 
 
 def _remove_file(path: str) -> None:
@@ -128,7 +129,13 @@ def import_tasks(
     except RazTodoException as e:
         raise _domain_error(e) from e
     except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Import failed: {e}") from e
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "IMPORT_ERROR",
+                "message": "Unable to import tasks",
+            },
+        ) from e
     finally:
         tmp.close()
         if os.path.exists(tmp.name):
@@ -164,7 +171,7 @@ def update_task(
         tasks = list_uc.execute()
         task = next((t for t in tasks if t.id == task_id), None)
         if task is None:
-            raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+            raise TaskNotFoundError(task_id)
         return task_to_response(task)
     except RazTodoException as e:
         raise _domain_error(e) from e
@@ -178,7 +185,7 @@ def delete_task(
     try:
         uc.execute(task_id)
     except RazTodoException as e:
-        raise HTTPException(status_code=404, detail=str(e)) from e
+        raise _domain_error(e) from e
 
 
 @router.patch("/{task_id}/done", response_model=TaskResponse)
@@ -191,12 +198,12 @@ def toggle_done(
         tasks = list_uc.execute()
         task = next((t for t in tasks if t.id == task_id), None)
         if task is None:
-            raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+            raise TaskNotFoundError(task_id)
         mark_uc.execute(task_id, done=not task.done)
         tasks = list_uc.execute()
         task = next((t for t in tasks if t.id == task_id), None)
         if task is None:
-            raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+            raise TaskNotFoundError(task_id)
         return task_to_response(task)
     except RazTodoException as e:
         raise _domain_error(e) from e
