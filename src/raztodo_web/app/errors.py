@@ -82,18 +82,52 @@ def api_error_response(definition: APIErrorDefinition) -> dict[str, dict[str, st
     }
 
 
+def _definition_for_error(error: RazTodoException) -> APIErrorDefinition:
+    definition = _ERROR_DEFINITIONS.get(type(error))
+
+    if definition is not None:
+        return definition
+
+    error_message = str(error)
+
+    if error_message.startswith("DuplicateTaskError:"):
+        return _ERROR_DEFINITIONS[DuplicateTaskError]
+
+    if error_message.startswith("TaskValidationError:"):
+        return _ERROR_DEFINITIONS[TaskValidationError]
+
+    if error_message.startswith("No task found with id "):
+        return _ERROR_DEFINITIONS[TaskNotFoundError]
+
+    if error_message.startswith("DatabaseConnectionError:"):
+        return _ERROR_DEFINITIONS[DatabaseConnectionError]
+
+    if error_message.startswith("DatabaseError:"):
+        return _ERROR_DEFINITIONS[DatabaseError]
+
+    if error_message.startswith("FilePermissionError:"):
+        return _ERROR_DEFINITIONS[FilePermissionError]
+
+    if error_message.startswith("InvalidFileFormatError:"):
+        return _ERROR_DEFINITIONS[InvalidFileFormatError]
+
+    if error_message.startswith("TaskFileNotFoundError:"):
+        return _ERROR_DEFINITIONS[TaskFileNotFoundError]
+
+    if error_message.startswith("FileOperationError:"):
+        return _ERROR_DEFINITIONS[FileOperationError]
+
+    return APIErrorDefinition(
+        status_code=400,
+        code="DOMAIN_ERROR",
+        message="The request could not be completed",
+    )
+
+
 def domain_error_response(
     error: RazTodoException,
 ) -> tuple[int, dict[str, dict[str, str]]]:
-    definition = _ERROR_DEFINITIONS.get(type(error))
-
-    if definition is None:
-        definition = APIErrorDefinition(
-            status_code=400,
-            code="DOMAIN_ERROR",
-            message="The request could not be completed",
-        )
-
+    definition = _definition_for_error(error)
     return definition.status_code, api_error_response(definition)
 
 
