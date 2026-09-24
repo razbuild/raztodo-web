@@ -67,7 +67,11 @@ export async function fetchExplain() {
       const err = await response
         .json()
         .catch(() => ({ detail: response.statusText }));
-      body.innerHTML = `<div class="explain-error">${esc(err.detail || "Request failed")}</div>`;
+
+      const message =
+        err.error?.message || err.detail || "Request failed";
+
+      body.innerHTML = `<div class="explain-error">${esc(message)}</div>`;
       return;
     }
 
@@ -75,6 +79,7 @@ export async function fetchExplain() {
     const decoder = new TextDecoder();
     let buffer = "";
     let started = false;
+    let currentEvent = null;
 
     while (true) {
       const { done, value } = await reader.read();
@@ -86,10 +91,31 @@ export async function fetchExplain() {
       buffer = lines.pop() ?? "";
 
       for (const line of lines) {
+        if (line.startsWith("event: ")) {
+          currentEvent = line.slice(7).trim();
+          continue;
+        }
+
         if (!line.startsWith("data: ")) continue;
 
         const token = line.slice(6);
+
         if (token === "[DONE]") break;
+
+        if (currentEvent === "error") {
+          try {
+            const error = JSON.parse(token);
+            body.innerHTML = `<div class="explain-error">${esc(
+              error.message || "Unable to generate explanation",
+            )}</div>`;
+          } catch {
+            body.innerHTML = `<div class="explain-error">${esc(
+              "Unable to generate explanation",
+            )}</div>`;
+          }
+
+          return;
+        }
 
         if (!started) {
           document.querySelector(".explain-loading").style.display = "none";
@@ -98,6 +124,7 @@ export async function fetchExplain() {
         }
 
         textEl.textContent += token.replace(/\\n/g, "\n");
+        currentEvent = null;
       }
 
       if (lines.some((l) => l === "data: [DONE]")) break;

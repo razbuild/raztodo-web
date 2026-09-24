@@ -4,7 +4,11 @@ from unittest.mock import MagicMock
 
 import pytest
 from httpx import ASGITransport, AsyncClient
-from raztodo.domain.exceptions import RazTodoException
+from raztodo.domain.exceptions import (
+    DuplicateTaskError,
+    RazTodoException,
+    TaskNotFoundError,
+)
 from raztodo.domain.task_entity import TaskEntity
 
 from raztodo_web.app import dependencies as deps
@@ -212,6 +216,20 @@ class TestCreateTask:
         res = await c.post("/api/tasks", json={"title": "Dup"})
         assert res.status_code == 400
 
+    async def test_domain_error_returns_standardized_response(self, client):
+        c, uc = client
+        uc["create"].execute.side_effect = DuplicateTaskError("Existing task")
+
+        res = await c.post("/api/tasks", json={"title": "Existing task"})
+
+        assert res.status_code == 409
+        assert res.json() == {
+            "detail": {
+                "code": "DUPLICATE_TASK",
+                "message": "Task already exists",
+            }
+        }
+
     async def test_returns_500_when_created_task_cannot_be_loaded(self, client):
         c, uc = client
         uc["create"].execute.return_value = 99
@@ -260,9 +278,17 @@ class TestDeleteTask:
 
     async def test_not_found_returns_404(self, client):
         c, uc = client
-        uc["delete"].execute.side_effect = RazTodoException("No task found with id 99")
+        uc["delete"].execute.side_effect = TaskNotFoundError(99)
+
         res = await c.delete("/api/tasks/99")
+
         assert res.status_code == 404
+        assert res.json() == {
+            "detail": {
+                "code": "TASK_NOT_FOUND",
+                "message": "Task not found",
+            }
+        }
 
 
 # ---------------------------------------------------------------------------
@@ -407,6 +433,12 @@ class TestImportTasks:
     async def test_unexpected_import_error_returns_422(self, client):
         c, uc = client
         uc["import"].execute.side_effect = ValueError("bad shape")
+
         res = await c.post("/api/tasks/import", json=[{"title": "X"}])
-        assert res.json()["detail"] == "Import failed: bad shape"
+
         assert res.status_code == 422
+        assert res.json()["detail"] == {
+            "code": "IMPORT_ERROR",
+            "message": "Unable to import tasks",
+        }
+        assert "bad shape" not in res.text
