@@ -2,7 +2,6 @@
     <h2 class="nav-section-title" id="tools-heading">Tools</h2>
 
     <div class="tool-buttons">
-
         <button type="button" class="btn-ghost">
             <img
                 src="{{ url_for('static', path='img/export.svg') }}"
@@ -29,7 +28,6 @@
             >
             Clear all
         </button>
-
     </div>
 
     <input
@@ -38,4 +36,24 @@
         accept=".json,application/json"
         style="display: none"
     />
+</section>
+
+<section class="nav-section" aria-labelledby="support-heading">
+    <h2 class="nav-section-title" id="support-heading">Support</h2>
+
+    <div class="tool-buttons">
+        <a
+            href="https://github.com/razbuild/raztodo-web/issues/new?title=%5BBug%5D+"
+            class="btn-ghost"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img
+                src="{{ url_for('static', path='img/bug.svg') }}"
+                alt=""
+                aria-hidden="true"
+            >
+            Report a bug
+        </a>
+    </div>
 </section>

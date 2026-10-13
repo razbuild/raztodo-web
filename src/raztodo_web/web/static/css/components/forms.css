@@ -112,6 +112,8 @@ input.input-primary:hover {
         background var(--t),
         color var(--t);
     text-align: left;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 .btn-ghost svg {
     width: 17px;
