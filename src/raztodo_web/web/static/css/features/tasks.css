@@ -3,7 +3,7 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     flex: 1;
     overflow-y: auto;
@@ -23,14 +23,23 @@
     gap: 11px;
     transition:
         border-color var(--t),
-        background var(--t);
+        background var(--t),
+        box-shadow var(--t),
+        transform var(--t),
+        opacity var(--t);
 }
-.task-item:hover {
-    border-color: rgba(255, 255, 255, 0.13);
+.task-item:hover,
+.task-item:focus-within {
+    border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
     background: var(--task-hover-bg);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
 }
 .task-item.done {
     opacity: 0.55;
+}
+.task-item.done:hover {
+    opacity: 0.8;
 }
 .task-item.done .task-title {
     text-decoration: line-through;
@@ -65,22 +74,29 @@
     font-size: 14px;
     color: var(--text-secondary);
     word-break: break-word;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 /* Task action buttons hidden until hover */
 .task-actions {
     display: flex;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
     opacity: 0;
-    transition: opacity var(--t);
+    transform: translateX(6px);
+    pointer-events: none;
+    transition:
+        opacity var(--t),
+        transform var(--t);
 }
 .task-item:hover .task-actions,
 .task-item:focus-within .task-actions {
     opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
 }
 
+/* Base action button */
 .task-actions button {
     padding: 6px 12px;
     border-radius: var(--r-sm);
@@ -93,66 +109,89 @@
     transition:
         background var(--t),
         color var(--t),
-        border-color var(--t);
+        border-color var(--t),
+        box-shadow var(--t),
+        transform var(--t);
     white-space: nowrap;
 }
-.task-actions button:hover {
+.task-actions button:active {
+    transform: scale(0.96);
+}
+
+/* Generic hover/focus (only for buttons without a semantic color) */
+.task-actions button:not(.btn-done):not(.btn-delete):not(.btn-edit):not(.btn-explain):hover {
     background: var(--bg-hover);
     color: var(--text-primary);
     border-color: var(--border-focus);
 }
-.task-actions .btn-done {
-    color: rgba(74, 222, 128, 0.8);
-    border-color: rgba(74, 222, 128, 0.2);
+.task-actions button:not(.btn-done):not(.btn-delete):not(.btn-edit):not(.btn-explain):focus-visible {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
-.task-actions .btn-done:hover {
-    background: rgba(74, 222, 128, 0.08);
-    color: #4ade80;
+
+/* Semantic actions (each button gets its own color via --c) */
+.task-actions .btn-done {
+    --c: var(--green);
 }
 .task-actions .btn-delete {
-    color: rgba(248, 113, 113, 0.7);
-    border-color: rgba(248, 113, 113, 0.15);
+    --c: var(--red);
 }
-.task-actions .btn-delete:hover {
-    background: rgba(239, 68, 68, 0.08);
-    color: #f87171;
-}
-
 .task-actions .btn-edit {
-    color: rgba(96, 165, 250, 0.8);
-    border-color: rgba(96, 165, 250, 0.2);
+    --c: var(--blue);
 }
-
-.task-actions .btn-edit:hover {
-    background: rgba(96, 165, 250, 0.08);
-    color: #60a5fa;
-}
-
 .task-actions .btn-explain {
-    color: rgba(168, 85, 247, 0.8);
-    border-color: rgba(168, 85, 247, 0.2);
+    --c: var(--purple);
 }
 
-.task-actions .btn-explain:hover {
-    background: rgba(168, 85, 247, 0.08);
-    color: #a855f7;
+.task-actions button.btn-done,
+.task-actions button.btn-delete,
+.task-actions button.btn-edit,
+.task-actions button.btn-explain {
+    background: color-mix(in srgb, var(--c) 10%, transparent);
+    color: var(--c);
+    border-color: color-mix(in srgb, var(--c) 30%, transparent);
+}
+.task-actions button.btn-done:hover,
+.task-actions button.btn-delete:hover,
+.task-actions button.btn-edit:hover,
+.task-actions button.btn-explain:hover {
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    color: var(--c);
+    border-color: color-mix(in srgb, var(--c) 55%, transparent);
+}
+.task-actions button.btn-done:focus-visible,
+.task-actions button.btn-delete:focus-visible,
+.task-actions button.btn-edit:focus-visible,
+.task-actions button.btn-explain:focus-visible {
+    outline: none;
+    border-color: color-mix(in srgb, var(--c) 55%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent);
 }
 
 /* ── Badges ────────────────────────────────────────── */
 .task-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 6px;
 }
 
 .badge {
     font-size: 12px;
     font-weight: 500;
-    padding: 3px 9px;
+    padding: 3px 10px;
     border-radius: 20px;
     background: var(--bg-elevated);
     color: var(--text-secondary);
     letter-spacing: 0.01em;
+    border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    transition:
+        background var(--t),
+        border-color var(--t);
+}
+.task-item:hover .badge,
+.task-item:focus-within .badge {
+    border-color: color-mix(in srgb, currentColor 28%, transparent);
 }
 .badge.priority-h {
     background: var(--ph-bg);
@@ -190,7 +229,7 @@
 }
 .edit-actions {
     display: flex;
-    gap: 6px;
+    gap: 8px;
 }
 .btn-save {
     padding: 8px 16px;
@@ -202,10 +241,22 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: background var(--t);
+    transition:
+        background var(--t),
+        box-shadow var(--t),
+        transform var(--t);
 }
 .btn-save:hover {
     background: var(--accent-hover);
+    box-shadow: 0 4px 14px var(--accent-subtle);
+}
+.btn-save:active {
+    transform: scale(0.97);
+}
+.btn-save:focus-visible,
+.btn-cancel:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 .btn-cancel {
     padding: 8px 16px;
@@ -216,11 +267,20 @@
     font-family: var(--font);
     font-size: 13px;
     cursor: pointer;
-    transition: background var(--t);
+    transition:
+        background var(--t),
+        color var(--t),
+        border-color var(--t),
+        box-shadow var(--t),
+        transform var(--t);
 }
 .btn-cancel:hover {
     background: var(--bg-hover);
     color: var(--text-primary);
+    border-color: var(--border-focus);
+}
+.btn-cancel:active {
+    transform: scale(0.97);
 }
 
 /* ── Scrollbar (task list) ─────────────────────────── */
@@ -230,6 +290,10 @@
 .task-list::-webkit-scrollbar-thumb {
     background: var(--bg-elevated);
     border-radius: 3px;
+    transition: background var(--t);
+}
+.task-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 .task-list::-webkit-scrollbar-track {
     background: transparent;
@@ -248,4 +312,16 @@
     opacity: 0.3;
     display: block;
     margin-bottom: 12px;
+}
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .task-item,
+    .task-actions,
+    .task-actions button,
+    .btn-save,
+    .btn-cancel {
+        transition-duration: 0.01ms;
+        transform: none;
+    }
 }

@@ -134,7 +134,7 @@ export function renderTasks(tasks) {
     taskList.innerHTML = `
 <li class="empty-state">
     <span class="empty-state-icon">✓</span>
-    ${state.currentFilter === "done" ? "No completed tasks yet." : state.currentFilter === "pending" ? "No pending tasks — all done!" : "No tasks yet. Add one to get started."}
+    ${state.currentFilter === "done" ? "No completed tasks yet." : state.currentFilter === "pending" ? "No pending tasks. All done!" : "No tasks yet. Add one to get started."}
 </li>`;
     return;
   }

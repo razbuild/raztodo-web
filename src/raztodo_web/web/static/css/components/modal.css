@@ -2,7 +2,7 @@
 .modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--backdrop);
     backdrop-filter: blur(3px);
     z-index: 200;
     display: flex;
@@ -27,12 +27,12 @@
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-    transform: translateY(8px);
-    transition: transform 180ms ease;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(8px) scale(0.985);
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .modal-backdrop.open .modal {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 .modal-header {
@@ -67,12 +67,17 @@
     line-height: 1;
     transition:
         background var(--t),
-        color var(--t);
+        color var(--t),
+        box-shadow var(--t);
     flex-shrink: 0;
 }
 .modal-close:hover {
     background: var(--bg-hover);
     color: var(--text-primary);
+}
+.modal-close:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
 .modal-modes {
@@ -95,16 +100,22 @@
     transition:
         background var(--t),
         color var(--t),
-        border-color var(--t);
+        border-color var(--t),
+        box-shadow var(--t);
 }
 .mode-btn:hover {
     background: var(--bg-hover);
     color: var(--text-primary);
 }
-.mode-btn.active {
+.mode-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+.mode-btn.active,
+.mode-btn.active:hover {
     background: var(--accent-subtle);
-    border-color: rgba(231, 76, 60, 0.3);
-    color: var(--accent-hover);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    color: var(--accent);
 }
 
 .modal-body {
@@ -128,7 +139,7 @@
     width: 14px;
     height: 14px;
     border: 2px solid var(--border-input);
-    border-top-color: var(--text-secondary);
+    border-top-color: var(--accent);
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     flex-shrink: 0;
@@ -151,7 +162,23 @@
     font-size: 14px;
     color: var(--red);
     padding: 12px 14px;
-    background: rgba(248, 113, 113, 0.08);
+    background: color-mix(in srgb, var(--red) 9%, transparent);
     border-radius: var(--r-sm);
-    border: 1px solid rgba(248, 113, 113, 0.15);
+    border: 1px solid color-mix(in srgb, var(--red) 28%, transparent);
+}
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .modal-backdrop,
+    .modal,
+    .modal-close,
+    .mode-btn {
+        transition-duration: 0.01ms;
+    }
+    .modal {
+        transform: none;
+    }
+    .explain-loading::before {
+        animation-duration: 1.6s;
+    }
 }

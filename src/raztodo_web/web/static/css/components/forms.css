@@ -35,7 +35,8 @@ select {
     font-size: 14px;
     transition:
         border-color var(--t),
-        box-shadow var(--t);
+        box-shadow var(--t),
+        background var(--t);
 }
 
 input:hover,
@@ -43,17 +44,15 @@ select:hover {
     border-color: var(--border-focus);
 }
 
-
 input::placeholder {
     color: var(--text-muted);
 }
-
 
 input:focus,
 select:focus {
     outline: none;
     border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
 input.input-primary {
@@ -64,6 +63,7 @@ input.input-primary {
 
 select option {
     background: var(--bg-panel);
+    color: var(--text-primary);
 }
 
 input.input-primary:hover {
@@ -84,15 +84,21 @@ input.input-primary:hover {
     cursor: pointer;
     transition:
         background var(--t),
+        box-shadow var(--t),
         transform var(--t);
     letter-spacing: 0.01em;
     margin-top: 4px;
 }
 .btn-primary:hover {
     background: var(--accent-hover);
+    box-shadow: 0 4px 14px var(--accent-subtle);
 }
 .btn-primary:active {
     transform: scale(0.98);
+}
+.btn-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
 .btn-ghost {
@@ -123,6 +129,10 @@ input.input-primary:hover {
 .btn-ghost:hover {
     background: var(--bg-hover);
     color: var(--text-primary);
+}
+.btn-ghost:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
 .btn-danger-ghost:hover {
@@ -164,11 +174,16 @@ input.input-primary:hover {
     border: 1px solid var(--border-input);
     background: var(--bg-input);
     overflow: hidden;
-    transition: border-color var(--t), box-shadow var(--t);
+    transition:
+        border-color var(--t),
+        box-shadow var(--t);
+}
+.priority-picker:hover {
+    border-color: var(--border-focus);
 }
 .priority-picker:focus-within {
     border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
 .priority-arrow {
@@ -183,7 +198,9 @@ input.input-primary:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background var(--t), color var(--t);
+    transition:
+        background var(--t),
+        color var(--t);
     padding: 0;
 }
 .priority-arrow:hover:not(:disabled) {
@@ -208,11 +225,17 @@ input.input-primary:hover {
     justify-content: center;
 }
 
-/* Light theme */
-[data-theme="light"] .priority-picker {
-    background: var(--bg-input);
-    border-color: var(--border-input);
-}
-[data-theme="light"] .priority-arrow:hover:not(:disabled) {
-    background: var(--bg-hover);
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    input,
+    select,
+    .btn-primary,
+    .btn-ghost,
+    .priority-picker,
+    .priority-arrow {
+        transition-duration: 0.01ms;
+    }
+    .btn-primary:active {
+        transform: none;
+    }
 }

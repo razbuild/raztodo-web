@@ -1,79 +1,59 @@
 /* ── Light Theme ───────────────────────────────────── */
 [data-theme="light"] {
+    color-scheme: light;
+
     /* Surfaces */
-    --bg-app: #f3f4f6;
+    --bg-app: #faf6f6;
     --bg-sidebar: #ffffff;
     --bg-panel: #ffffff;
-    --bg-input: #eef0f3;
-    --bg-hover: #e1e4e8;
-    --bg-elevated: #d1d5db;
+    --bg-input: #f4eeee;
+    --bg-hover: #ece3e4;
+    --bg-elevated: #e0d4d5;
 
     /* Borders */
-    --border: rgba(0, 0, 0, 0.13);
-    --border-input: rgba(0, 0, 0, 0.17);
-    --border-focus: rgba(0, 0, 0, 0.32);
+    --border: rgba(60, 20, 25, 0.10);
+    --border-input: rgba(60, 20, 25, 0.14);
+    --border-focus: rgba(214, 40, 40, 0.55);
 
     /* Text */
-    --text-primary: rgba(0, 0, 0, 0.94);
-    --text-secondary: rgba(0, 0, 0, 0.76);
-    --text-muted: rgba(0, 0, 0, 0.56);
-    --text-label: rgba(0, 0, 0, 0.66);
+    --text-primary: rgba(30, 14, 16, 0.94);
+    --text-secondary: rgba(30, 14, 16, 0.74);
+    --text-muted: rgba(30, 14, 16, 0.54);
+    --text-label: rgba(30, 14, 16, 0.64);
 
+    /* Accent */
+    --accent: #e5383b;
+    --accent-hover: #ff5a5f;
+    --accent-subtle: rgba(229, 56, 59, 0.14);
+
+    /* Status */
     --green: #15803d;
     --red: #dc2626;
     --yellow: #a16207;
+    --blue: #0b5ed7;
+    --purple: #6d28d9;
 
-    /* Badges */
-    --ph-bg: #fee2e2;
+    /* Priority */
+    --ph-bg: #fdd5d5;
     --ph-text: #991b1b;
-    --pm-bg: #fef3c7;
+    --pm-bg: #fbe8b0;
     --pm-text: #854d0e;
-    --pl-bg: #dcfce7;
+    --pl-bg: #cdf3d8;
     --pl-text: #166534;
-    --tag-bg: #ede9fe;
+
+    /* Tags / Project */
+    --tag-bg: #e4dafc;
     --tag-text: #5b21b6;
-    --project-bg: #cffafe;
-    --project-text: #155e75;
-    --overdue-bg: #fee2e2;
+    --project-bg: #d3ecfb;
+    --project-text: #075985;
+    --overdue-bg: #fdd5d5;
     --overdue-text: #991b1b;
 
-    --task-hover-bg: #e1e4e8;
-}
+    --task-hover-bg: #f6eeee;
+    --shadow-md: 0 6px 20px rgba(60, 20, 25, 0.10);
 
-[data-theme="light"] .task-item:hover .task-actions button {
-    border-color: rgba(0, 0, 0, 0.16);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-}
-
-[data-theme="light"] .task-item:hover .task-actions button:hover,
-[data-theme="light"] .task-item:focus-within .task-actions button:focus {
-    border-color: var(--border-focus);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
-}
-
-/* Semantic actions */
-[data-theme="light"] .task-item:hover .task-actions .btn-done {
-    color: #166534;
-    background: rgba(74, 222, 128, 0.13);
-    border-color: rgba(74, 222, 128, 0.38);
-}
-
-[data-theme="light"] .task-item:hover .task-actions .btn-delete {
-    background: rgba(248, 113, 113, 0.14);
-    color: #7f1d1d;
-    border-color: rgba(248, 113, 113, 0.32);
-}
-
-[data-theme="light"] .task-item:hover .task-actions .btn-edit {
-    background: rgba(96, 165, 250, 0.13);
-    color: #0b5ed7;
-    border-color: rgba(96, 165, 250, 0.36);
-}
-
-[data-theme="light"] .task-item:hover .task-actions .btn-explain {
-    background: rgba(168, 85, 247, 0.13);
-    color: #5b21b6;
-    border-color: rgba(168, 85, 247, 0.36);
+    --backdrop: rgba(30, 14, 16, 0.38);
+    --shadow-lg: 0 24px 60px rgba(60, 20, 25, 0.18);
 }
 
 /* Toast */
