@@ -20,7 +20,7 @@ from raztodo_web.app.dependencies import (
     get_update_uc,
 )
 from raztodo_web.app.errors import domain_error
-from raztodo_web.features.tasks.helpers import task_to_response
+from raztodo_web.features.tasks.helpers import remove_file, task_to_response
 from raztodo_web.features.tasks.schemas import (
     ClearResponse,
     ImportResponse,
@@ -30,15 +30,6 @@ from raztodo_web.features.tasks.schemas import (
 )
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
-
-
-def _domain_error(e: RazTodoException) -> HTTPException:
-    return domain_error(e)
-
-
-def _remove_file(path: str) -> None:
-    if os.path.exists(path):
-        os.unlink(path)
 
 
 @router.get("", response_model=list[TaskResponse])
@@ -58,7 +49,7 @@ def list_tasks(
             ]
         return [task_to_response(t) for t in tasks]
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
 
 
 @router.post("", response_model=TaskResponse, status_code=201)
@@ -84,7 +75,7 @@ def create_task(
             )
         return task_to_response(task)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
 
 
 @router.get("/export")
@@ -92,12 +83,13 @@ def export_tasks(
     background_tasks: BackgroundTasks,
     uc: Any = Depends(get_export_uc),  # noqa: B008
 ) -> FileResponse:
-    try:
-        fd, path = tempfile.mkstemp(suffix=".json")
-        os.close(fd)
+    fd, path = tempfile.mkstemp(suffix=".json")
+    os.close(fd)
 
+    try:
         uc.execute(path)
-        background_tasks.add_task(_remove_file, path)
+
+        background_tasks.add_task(remove_file, path)
 
         return FileResponse(
             path=path,
@@ -105,7 +97,11 @@ def export_tasks(
             filename="raztodo_export.json",
         )
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        remove_file(path)
+        raise domain_error(e) from e
+    except Exception:
+        remove_file(path)
+        raise
 
 
 @router.post("/import", response_model=ImportResponse)
@@ -127,7 +123,7 @@ def import_tasks(
             )
         return ImportResponse(inserted=int(result), updated=0)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
     except Exception as e:
         raise HTTPException(
             status_code=422,
@@ -148,7 +144,7 @@ def clear_tasks(uc: Any = Depends(get_clear_uc)) -> ClearResponse:  # noqa: B008
         deleted: int = uc.execute(confirmed=True)
         return ClearResponse(deleted=deleted)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
 
 
 @router.put("/{task_id}", response_model=TaskResponse)
@@ -159,22 +155,26 @@ def update_task(
     update_uc: Any = Depends(get_update_uc),  # noqa: B008
 ) -> TaskResponse:
     try:
-        update_uc.execute(
-            task_id,
-            title=body.title,
-            description=body.description,
-            priority=body.priority if body.priority is not None else "",
-            due_date=body.due_date if body.due_date is not None else "",
-            tags=body.tags if body.tags is not None else [],
-            project=body.project if body.project is not None else "",
-        )
+        changes = {
+            field: getattr(body, field)
+            for field in (
+                "title",
+                "description",
+                "priority",
+                "due_date",
+                "tags",
+                "project",
+            )
+            if field in body.model_fields_set
+        }
+        update_uc.execute(task_id, **changes)
         tasks = list_uc.execute()
         task = next((t for t in tasks if t.id == task_id), None)
         if task is None:
             raise TaskNotFoundError(task_id)
         return task_to_response(task)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
 
 
 @router.delete("/{task_id}", status_code=204)
@@ -185,7 +185,7 @@ def delete_task(
     try:
         uc.execute(task_id)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
 
 
 @router.patch("/{task_id}/done", response_model=TaskResponse)
@@ -206,4 +206,4 @@ def toggle_done(
             raise TaskNotFoundError(task_id)
         return task_to_response(task)
     except RazTodoException as e:
-        raise _domain_error(e) from e
+        raise domain_error(e) from e
