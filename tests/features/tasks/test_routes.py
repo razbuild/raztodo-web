@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import tempfile
 from unittest.mock import MagicMock
 
 import pytest
@@ -248,20 +250,62 @@ class TestUpdateTask:
         c, uc = client
         updated = make_task(1, "Updated title")
         uc["list"].execute.return_value = [updated]
-        res = await c.put("/api/tasks/1", json={"title": "Updated title"})
+
+        res = await c.put(
+            "/api/tasks/1",
+            json={"title": "Updated title"},
+        )
+
         assert res.status_code == 200
         assert res.json()["title"] == "Updated title"
+
+    async def test_partial_update_passes_only_provided_fields(self, client):
+        c, uc = client
+        updated = make_task(1, "Updated title")
+        uc["list"].execute.return_value = [updated]
+
+        res = await c.put(
+            "/api/tasks/1",
+            json={"title": "Updated title"},
+        )
+
+        assert res.status_code == 200
+        uc["update"].execute.assert_called_once_with(
+            1,
+            title="Updated title",
+        )
+
+    async def test_explicit_empty_tags_are_preserved_in_update(self, client):
+        c, uc = client
+        updated = make_task(1, "Updated title")
+        uc["list"].execute.return_value = [updated]
+
+        res = await c.put(
+            "/api/tasks/1",
+            json={"title": "Updated title", "tags": []},
+        )
+
+        assert res.status_code == 200
+        uc["update"].execute.assert_called_once_with(
+            1,
+            title="Updated title",
+            tags=[],
+        )
 
     async def test_domain_error_returns_400(self, client):
         c, uc = client
         uc["update"].execute.side_effect = RazTodoException("not found")
+
         res = await c.put("/api/tasks/99", json={"title": "X"})
+
         assert res.status_code == 400
 
     async def test_returns_404_when_updated_task_cannot_be_loaded(self, client):
         c, uc = client
         uc["list"].execute.return_value = []
+
         res = await c.put("/api/tasks/99", json={"title": "X"})
+
         assert res.status_code == 404
 
 
@@ -392,6 +436,28 @@ class TestExportTasks:
         uc["export"].execute.side_effect = RazTodoException("export failed")
         res = await c.get("/api/tasks/export")
         assert res.status_code == 400
+
+    async def test_export_failure_removes_temp_file(self, client, monkeypatch):
+        c, uc = client
+        created_paths = []
+        real_mkstemp = tempfile.mkstemp
+
+        def tracked_mkstemp(*args, **kwargs):
+            fd, path = real_mkstemp(*args, **kwargs)
+            created_paths.append(path)
+            return fd, path
+
+        monkeypatch.setattr(
+            "raztodo_web.features.tasks.routes.tempfile.mkstemp",
+            tracked_mkstemp,
+        )
+        uc["export"].execute.side_effect = RazTodoException("export failed")
+
+        res = await c.get("/api/tasks/export")
+
+        assert res.status_code == 400
+        assert len(created_paths) == 1
+        assert not os.path.exists(created_paths[0])
 
 
 # ---------------------------------------------------------------------------
