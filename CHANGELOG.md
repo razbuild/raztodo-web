@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.1] - 2026-10-16
+
+### Added
+- Added a **Report a bug** link to the sidebar
+
+### Fixed
+- Fixed partial task updates to preserve existing values for fields that are not provided
+- Improved export error handling and cleanup after failed exports
+- Standardized API error messages for more consistent responses
+
+### Tests
+- Added test coverage for partial task updates and export cleanup
+
 ## [0.1.0] - 2026-08-26
 
 ### Added
