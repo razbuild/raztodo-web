@@ -20,3 +20,9 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
+
+/* ── Text Selection ─────────────────────────────── */
+::selection {
+    background: rgba(229, 56, 59, 0.32);
+    color: var(--text-primary);
+}

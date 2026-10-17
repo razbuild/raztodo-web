@@ -140,3 +140,25 @@ export function setFilter(filter) {
   });
   renderTasks(state.tasks);
 }
+
+export function copyTaskId() {
+  document.addEventListener("click", async (event) => {
+    const element = event.target.closest(".task-id-value");
+
+    if (!element || element.classList.contains("copied")) return;
+
+    try {
+      await navigator.clipboard.writeText(element.dataset.id);
+
+      element.classList.remove("copied");
+      void element.offsetWidth;
+      element.classList.add("copied");
+
+      setTimeout(() => {
+        element.classList.remove("copied");
+      }, 900);
+    } catch {
+      setStatus("Could not copy task ID.", true);
+    }
+  });
+}

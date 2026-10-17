@@ -8,6 +8,14 @@ const MODES = {
   plan: "Action Plan",
 };
 
+let copiedTimer = null;
+
+function resetCopyButton(button) {
+  clearTimeout(copiedTimer);
+  copiedTimer = null;
+  button.classList.remove("copied");
+}
+
 export function openExplain(taskId) {
   const task = state.tasks.find((t) => t.id === taskId);
   state.explain.taskId = taskId;
@@ -50,6 +58,10 @@ export function switchMode(mode) {
 export async function fetchExplain() {
   const body = document.getElementById("explain-body");
   const label = MODES[state.explain.mode];
+  const copyButton = document.getElementById("explain-copy");
+
+  copyButton.disabled = true;
+  resetCopyButton(copyButton);
 
   body.innerHTML = `<div class="explain-loading">LLM ${label} …</div><pre class="explain-result" id="explain-text" style="display:none"></pre>`;
 
@@ -72,6 +84,7 @@ export async function fetchExplain() {
         err.error?.message || err.detail || "Request failed";
 
       body.innerHTML = `<div class="explain-error">${esc(message)}</div>`;
+      copyButton.disabled = true;
       return;
     }
 
@@ -129,10 +142,30 @@ export async function fetchExplain() {
 
       if (lines.some((l) => l === "data: [DONE]")) break;
     }
+    copyButton.disabled = !textEl.textContent.trim();
   } catch (err) {
     if (err.name === "AbortError") return;
     body.innerHTML = `<div class="explain-error">${esc(err.message)}</div>`;
   } finally {
     state.explain.controller = null;
+  }
+}
+
+export async function copyExplain() {
+  const text = document.getElementById("explain-text")?.textContent;
+  const button = document.getElementById("explain-copy");
+
+  if (!text?.trim() || button.disabled) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+
+    clearTimeout(copiedTimer);
+    button.classList.add("copied");
+    copiedTimer = setTimeout(() => {
+      button.classList.remove("copied");
+      copiedTimer = null;
+    }, 1200);
+  } catch {
   }
 }

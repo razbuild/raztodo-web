@@ -69,4 +69,7 @@
 
   --backdrop: rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  --copied-bg: rgba(74, 222, 128, 0.14);
+  --copied-border: rgba(74, 222, 128, 0.35);
 }

@@ -7,12 +7,12 @@
     --bg-sidebar: #ffffff;
     --bg-panel: #ffffff;
     --bg-input: #f4eeee;
-    --bg-hover: #ece3e4;
+    --bg-hover: #e5d8da;
     --bg-elevated: #e0d4d5;
 
     /* Borders */
-    --border: rgba(60, 20, 25, 0.10);
-    --border-input: rgba(60, 20, 25, 0.14);
+    --border: rgba(60, 20, 25, 0.20);
+    --border-input: rgba(60, 20, 25, 0.22);
     --border-focus: rgba(214, 40, 40, 0.55);
 
     /* Text */
@@ -54,6 +54,9 @@
 
     --backdrop: rgba(30, 14, 16, 0.38);
     --shadow-lg: 0 24px 60px rgba(60, 20, 25, 0.18);
+
+    --copied-bg: #bff0cf;
+    --copied-border: rgba(21, 128, 61, 0.45);
 }
 
 /* Toast */
@@ -67,4 +70,34 @@
 [data-theme="light"] .explain-error {
     background: rgba(220, 38, 38, 0.08);
     border-color: rgba(220, 38, 38, 0.26);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+    z-index: 1;
+}
+::view-transition-new(root) {
+    z-index: 2;
+    animation: theme-reveal 400ms ease-in both;
+}
+@keyframes theme-reveal {
+    from {
+        clip-path: circle(
+            0 at var(--theme-x) var(--theme-y)
+        );
+    }
+    to {
+        clip-path: circle(
+            var(--theme-radius) at var(--theme-x) var(--theme-y)
+        );
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
 }

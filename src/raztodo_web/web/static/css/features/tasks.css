@@ -189,10 +189,6 @@
         background var(--t),
         border-color var(--t);
 }
-.task-item:hover .badge,
-.task-item:focus-within .badge {
-    border-color: color-mix(in srgb, currentColor 28%, transparent);
-}
 .badge.priority-h {
     background: var(--ph-bg);
     color: var(--ph-text);

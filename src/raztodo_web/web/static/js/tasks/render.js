@@ -108,7 +108,30 @@ export function renderTask(task) {
             </button>
         </div>
     </div>
-    ${badges ? `<div class="task-meta">${badges}</div>` : ""}
+    <div class="task-meta">
+        <div class="task-badges">
+            ${badges}
+        </div>
+
+        <div class="task-id">
+            <span
+                class="task-id-value"
+                data-id="${esc(task.id)}"
+                title="Copy task ID"
+                role="button"
+                tabindex="0"
+                aria-label="Copy task ID ${esc(task.id)}"
+            >
+                <span class="task-id-label">#${esc(task.id)}</span>
+                <img
+                    class="task-id-check"
+                    src="/static/img/check.svg"
+                    alt=""
+                    aria-hidden="true"
+                />
+            </span>
+        </div>
+    </div>
 </li>`;
 }
 

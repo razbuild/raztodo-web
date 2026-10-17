@@ -1,0 +1,107 @@
+/* ── Task meta ───────────────────────────────────── */
+.task-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.task-badges {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.task-id {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+
+    margin-left: auto;
+    padding-left: 8px;
+    border-left: 1px solid var(--border);
+
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.task-id-value {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 36px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: var(--r-sm);
+
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: color var(--t), background-color var(--t);
+}
+
+.task-id-label {
+    transition: opacity 120ms ease;
+}
+
+.task-id-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+    pointer-events: none;
+    border: 1px solid transparent;
+    transition:
+        background-color var(--t),
+        border-color var(--t),
+        color var(--t);
+}
+
+.task-id-value:hover,
+.task-id-value:focus-visible {
+    background-color: var(--bg-hover);
+    border-color: var(--border-input);
+    color: var(--text-primary);
+}
+
+.task-id-value.copied {
+    color: var(--green);
+    background-color: var(--copied-bg);
+    border-color: var(--copied-border);
+}
+
+.task-id-value.copied .task-id-label {
+    opacity: 0;
+}
+
+.task-id-value.copied .task-id-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .task-id-label,
+    .task-id-value,
+    .task-id-check {
+        transition: none;
+    }
+}

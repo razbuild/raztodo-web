@@ -1,4 +1,4 @@
-import { closeExplain, openExplain, switchMode } from "./modal.js";
+import { closeExplain, openExplain, switchMode, copyExplain } from "./modal.js";
 
 export function initExplain() {
   window.openExplain = openExplain;
@@ -16,4 +16,6 @@ export function initExplain() {
   });
 
   document.querySelector(".modal-close")?.addEventListener("click", closeExplain);
+  
+  document.getElementById("explain-copy").addEventListener("click", copyExplain);
 }

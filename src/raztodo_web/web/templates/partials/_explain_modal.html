@@ -8,13 +8,47 @@
     <div class="modal">
         <div class="modal-header">
             <span class="modal-title" id="modal-title"></span>
-            <button class="modal-close" aria-label="Close">✕</button>
+
+            <div class="modal-header-actions">
+                <button
+                    class="explain-copy"
+                    id="explain-copy"
+                    type="button"
+                    disabled
+                    aria-label="Copy explanation"
+                    title="Copy explanation"
+                >
+                    <span class="copy-icon">Copy</span>
+                    <img
+                        class="copy-check"
+                        src="/static/img/check.svg"
+                        alt=""
+                        aria-hidden="true"
+                    />
+                </button>
+
+                <button
+                    class="modal-close"
+                    aria-label="Close"
+                    type="button"
+                >
+                    ✕
+                </button>
+            </div>
         </div>
+
         <div class="modal-modes">
-            <button class="mode-btn active" data-mode="short">Summary</button>
-            <button class="mode-btn" data-mode="deep">Deep Analysis</button>
-            <button class="mode-btn" data-mode="plan">Action Plan</button>
+            <button class="mode-btn active" data-mode="short">
+                Summary
+            </button>
+            <button class="mode-btn" data-mode="deep">
+                Deep Analysis
+            </button>
+            <button class="mode-btn" data-mode="plan">
+                Action Plan
+            </button>
         </div>
+
         <div class="modal-body" id="explain-body"></div>
     </div>
 </div>

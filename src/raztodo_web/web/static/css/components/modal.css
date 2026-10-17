@@ -39,18 +39,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 18px 20px 14px;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    min-width: 0;
 }
 .modal-title {
+    flex: 1;
+    min-width: 0;
+    max-width: 400px;
     font-size: 15px;
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 400px;
+}
+.modal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 .modal-close {
     width: 28px;
@@ -144,6 +154,79 @@
     animation: spin 0.7s linear infinite;
     flex-shrink: 0;
 }
+.explain-copy {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 32px;
+    flex-shrink: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background var(--t),
+        color var(--t),
+        border-color var(--t),
+        box-shadow var(--t);
+}
+.copy-icon {
+    transition: opacity 120ms ease;
+}
+.copy-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+    pointer-events: none;
+    transition:
+        opacity 150ms ease,
+        transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.explain-copy:hover:not(:disabled) {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+.explain-copy:active:not(:disabled) {
+    transform: scale(0.97);
+}
+/* The :hover variant is required: without it, the generic hover rule above
+   (higher specificity) overrides the copied state while the cursor is still
+   on the button right after clicking. */
+.explain-copy.copied,
+.explain-copy.copied:hover:not(:disabled) {
+    color: var(--green);
+    background: var(--pl-bg, color-mix(in srgb, var(--green) 12%, transparent));
+    border-color: color-mix(in srgb, var(--green) 40%, transparent);
+}
+.explain-copy.copied .copy-icon {
+    opacity: 0;
+}
+.explain-copy.copied .copy-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+.explain-copy:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.explain-copy:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -172,10 +255,16 @@
     .modal-backdrop,
     .modal,
     .modal-close,
-    .mode-btn {
+    .mode-btn,
+    .explain-copy,
+    .copy-icon,
+    .copy-check {
         transition-duration: 0.01ms;
     }
     .modal {
+        transform: none;
+    }
+    .explain-copy:active:not(:disabled) {
         transform: none;
     }
     .explain-loading::before {
