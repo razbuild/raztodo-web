@@ -308,6 +308,42 @@ class TestUpdateTask:
 
         assert res.status_code == 404
 
+    async def test_clears_priority_when_empty_string_is_provided(self, client):
+        c, uc = client
+        updated = make_task(1, "Updated title")
+        updated.priority = ""
+        uc["list"].execute.return_value = [updated]
+
+        res = await c.put(
+            "/api/tasks/1",
+            json={"priority": ""},
+        )
+
+        assert res.status_code == 200
+        assert res.json()["priority"] == ""
+        uc["update"].execute.assert_called_once_with(
+            1,
+            priority="",
+        )
+
+    async def test_updates_priority(self, client):
+        c, uc = client
+        updated = make_task(1, "Updated title")
+        updated.priority = "H"
+        uc["list"].execute.return_value = [updated]
+
+        res = await c.put(
+            "/api/tasks/1",
+            json={"priority": "H"},
+        )
+
+        assert res.status_code == 200
+        assert res.json()["priority"] == "H"
+        uc["update"].execute.assert_called_once_with(
+            1,
+            priority="H",
+        )
+
 
 # ---------------------------------------------------------------------------
 # DELETE /api/tasks/{id}

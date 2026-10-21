@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class TaskCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=60)
     description: str = Field(default="")
-    priority: str | None = Field(default=None, pattern="^[LMH]$")
+    priority: str | None = Field(default=None, pattern="^[LMH]?$")
     due_date: str | None = Field(default=None)
     tags: list[str] = Field(default_factory=list)
     project: str | None = Field(default=None)
@@ -15,7 +15,7 @@ class TaskCreate(BaseModel):
 class TaskUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=60)
     description: str | None = Field(default=None)
-    priority: str | None = Field(default=None, pattern="^[LMH]$")
+    priority: str | None = Field(default=None, pattern="^[LMH]?$")
     due_date: str | None = Field(default=None)
     tags: list[str] | None = Field(default=None)
     project: str | None = Field(default=None)
