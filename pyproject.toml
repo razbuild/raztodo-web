@@ -8,7 +8,7 @@ version = "0.1.1"
 description = "Web UI for RazTodo"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 maintainers = [
     { name = "Raz", email = "real.raz.dev@gmail.com" },
 ]
@@ -23,11 +23,11 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
 ]
 dependencies = [
     "raztodo>=0.11.0",
