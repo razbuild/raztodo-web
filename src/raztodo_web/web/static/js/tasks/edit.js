@@ -25,8 +25,8 @@ export async function saveEdit(id) {
   const payload = {
     title: document.getElementById(`edit-title-${id}`).value.trim(),
     description: document.getElementById(`edit-desc-${id}`).value.trim(),
-    priority: document.getElementById(`edit-priority-${id}`).value || null,
-    due_date: document.getElementById(`edit-due-${id}`).value || null,
+    priority: document.getElementById(`edit-priority-${id}`).value,
+    due_date: document.getElementById(`edit-due-${id}`).value,
     tags: document
       .getElementById(`edit-tags-${id}`)
       .value.split(",")
