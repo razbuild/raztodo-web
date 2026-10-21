@@ -32,7 +32,7 @@ export async function saveEdit(id) {
       .value.split(",")
       .map((t) => t.trim())
       .filter(Boolean),
-    priority: document.getElementById(`edit-priority-${id}`).value,
+    project: document.getElementById(`edit-project-${id}`).value.trim(),
   };
 
   if (!payload.title) {
