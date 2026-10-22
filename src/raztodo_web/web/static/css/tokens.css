@@ -72,4 +72,17 @@
 
   --copied-bg: rgba(74, 222, 128, 0.14);
   --copied-border: rgba(74, 222, 128, 0.35);
+
+  /* Priority picker */
+  --priority-none-bg: #31292b;
+  --priority-none-text: #f5eeee;
+
+  --priority-low-bg: #173b2a;
+  --priority-low-text: #86efac;
+
+  --priority-medium-bg: #493617;
+  --priority-medium-text: #fde68a;
+
+  --priority-high-bg: #4a2023;
+  --priority-high-text: #fca5a5;
 }

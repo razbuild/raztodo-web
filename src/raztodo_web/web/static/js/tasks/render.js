@@ -24,9 +24,10 @@ export function renderTask(task) {
             <div class="field">
                 <label id="edit-priority-label-${task.id}">Priority</label>
                 <div class="priority-picker" role="group" aria-labelledby="edit-priority-label-${task.id}">
-                    <button type="button" class="priority-arrow" data-picker="edit-priority-${task.id}" data-dir="-1" aria-label="Lower priority">&#8249;</button>
-                    <span class="priority-label" data-picker-label="edit-priority-${task.id}">${task.priority === "H" ? "High" : task.priority === "M" ? "Medium" : task.priority === "L" ? "Low" : "None"}</span>
-                    <button type="button" class="priority-arrow" data-picker="edit-priority-${task.id}" data-dir="1" aria-label="Higher priority">&#8250;</button>
+                    <button type="button" class="priority-option" data-picker="edit-priority-${task.id}" data-value="" aria-label="None" title="None" aria-pressed="${!task.priority}">N</button>
+                    <button type="button" class="priority-option" data-picker="edit-priority-${task.id}" data-value="L" aria-label="Low" title="Low" aria-pressed="${task.priority === "L"}">L</button>
+                    <button type="button" class="priority-option" data-picker="edit-priority-${task.id}" data-value="M" aria-label="Medium" title="Medium" aria-pressed="${task.priority === "M"}">M</button>
+                    <button type="button" class="priority-option" data-picker="edit-priority-${task.id}" data-value="H" aria-label="High" title="High" aria-pressed="${task.priority === "H"}">H</button>
                     <input type="hidden" id="edit-priority-${task.id}" value="${task.priority || ""}" />
                 </div>
             </div>

@@ -24,19 +24,41 @@
                 >
                     <button
                         type="button"
-                        class="priority-arrow"
+                        class="priority-option"
                         data-picker="new-priority"
-                        data-dir="-1"
-                        aria-label="Lower priority"
-                    >&#8249;</button>
-                    <span class="priority-label" data-picker-label="new-priority">None</span>
+                        data-value=""
+                        aria-pressed="true"
+                        title="None"
+                        aria-label="None"
+                    >N</button>
+
                     <button
                         type="button"
-                        class="priority-arrow"
+                        class="priority-option"
                         data-picker="new-priority"
-                        data-dir="1"
-                        aria-label="Higher priority"
-                    >&#8250;</button>
+                        data-value="L"
+                        aria-pressed="false"
+                        title="Low"
+                        aria-label="Low"
+                    >L</button>
+                    <button
+                        type="button"
+                        class="priority-option"
+                        data-picker="new-priority"
+                        data-value="M"
+                        aria-pressed="false"
+                        title="Medium"
+                        aria-label="Medium"
+                    >M</button>
+                    <button
+                        type="button"
+                        class="priority-option"
+                        data-picker="new-priority"
+                        data-value="H"
+                        aria-pressed="false"
+                        title="High"
+                        aria-label="High"
+                    >H</button>
                     <input type="hidden" id="new-priority" value="" />
                 </div>
             </div>

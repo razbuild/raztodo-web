@@ -57,6 +57,19 @@
 
     --copied-bg: #bff0cf;
     --copied-border: rgba(21, 128, 61, 0.45);
+
+    /* Priority picker */
+    --priority-none-bg: #ddd1d2;
+    --priority-none-text: #382426;
+
+    --priority-low-bg: #b7dfc4;
+    --priority-low-text: #14532d;
+
+    --priority-medium-bg: #f0d79a;
+    --priority-medium-text: #713f12;
+
+    --priority-high-bg: #efb8b8;
+    --priority-high-text: #7f1d1d;
 }
 
 /* Toast */
